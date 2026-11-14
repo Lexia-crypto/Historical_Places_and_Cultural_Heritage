@@ -11,13 +11,15 @@
 <div class="filters"><input id="search" placeholder="Search places, barangays, stories..."><select id="filter"><option value="">All categories</option></select></div>
 <p id="status"></p><div id="records" class="cards"></div></section></main>
 <dialog id="formDialog"><form id="recordForm"><div class="heading"><h2 id="formTitle">Add a record</h2><button type="button" id="close">×</button></div>
-<input type="hidden" id="rid"><label>Title *<input id="title" required></label>
-<div class="two"><label>Category<select id="category"></select></label><label>Status<select id="verified"><option value="pending">Pending</option><option value="verified">Verified</option></select></label></div>
-<div class="two"><label>Municipality<input id="municipality"></label><label>Barangay<input id="barangay"></label></div>
-<label>Description<textarea id="description"></textarea></label><label>Historical significance<textarea id="significance"></textarea></label>
-<label>Cultural practices<textarea id="practices"></textarea></label><div class="two"><label>Year / period<input id="period"></label><label>Image path<input id="image" placeholder="assets/photo.jpg"></label></div>
-<label>Source / reference<input id="source"></label><label>Source URL<input id="url"></label>
-<p class="note">Use verified information and cite the source. Keep unverified entries marked Pending.</p><div class="actions"><button type="button" id="cancel" class="muted">Cancel</button><button type="submit">Save record</button></div></form></dialog>
+<input type="hidden" id="rid"><input type="hidden" id="heritageCategory">
+<label>Category<select id="category"></select></label>
+<label>Name *<input id="title" required></label>
+<label>Municipality<input id="municipality"></label>
+<label>Description<textarea id="description" required></textarea></label>
+<label><span id="specificInfoLabel">Historical significance</span><textarea id="specificInfo"></textarea></label>
+<label>Image URL (optional)<input id="image" type="url" placeholder="Leave blank until an actual image is available"></label>
+<label>Source reference URL *<input id="source" type="url" required></label>
+<p class="note">Records are marked online_source_based until verified through local research.</p><div class="actions"><button type="button" id="cancel" class="muted">Cancel</button><button type="submit">Save record</button></div></form></dialog>
 <dialog id="detailDialog"><div id="detail"></div><button id="detailClose">Close</button></dialog>
 <footer>SIARGAO HERITAGE ARCHIVE · HISTORICAL PLACES AND CULTURAL HERITAGE · GROUP 6</footer>
 <script src="assets/app.js"></script></body></html>
