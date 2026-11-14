@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A second sample frontend that reads Siargao heritage records from the existing REST API.">
+  <title>Heritage API · Sample Client</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Heritage API sample client home">
+      <span class="brandMark" aria-hidden="true">H</span>
+      <span>Heritage <strong>API</strong></span>
+      <span class="clientTag">SAMPLE CLIENT 02</span>
+    </a>
+    <div id="connectionStatus" class="connectionStatus" data-state="checking" role="status" aria-live="polite">
+      <span class="connectionDot" aria-hidden="true"></span>
+      <span id="connectionLabel">Checking API</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="heroCopy">
+        <p class="eyebrow"><span class="eyebrowLine"></span> A SECOND FRONTEND · SAME API</p>
+        <h1>One source.<br><em>Many experiences.</em></h1>
+        <p class="heroDescription">This independent sample website fetches Siargao’s historical places and cultural heritage from the existing REST API.</p>
+        <div class="heroBadges">
+          <span>READ-ONLY DEMO</span>
+          <span>JAVASCRIPT FETCH</span>
+        </div>
+      </div>
+
+      <aside class="endpointPanel" aria-label="API endpoints used by this sample">
+        <div class="panelHeading">
+          <div>
+            <p class="panelEyebrow">LIVE API ROUTES</p>
+            <h2>Connected to<br>the same source.</h2>
+          </div>
+          <span class="routeCount">02</span>
+        </div>
+        <a class="endpointLink" href="../api/historical_places.php" target="_blank" rel="noopener noreferrer">
+          <span class="method">GET</span>
+          <code>/api/historical_places.php</code>
+          <span class="externalMark" aria-hidden="true">↗</span>
+        </a>
+        <a class="endpointLink" href="../api/cultural_heritage.php" target="_blank" rel="noopener noreferrer">
+          <span class="method">GET</span>
+          <code>/api/cultural_heritage.php</code>
+          <span class="externalMark" aria-hidden="true">↗</span>
+        </a>
+        <p class="panelNote"><span aria-hidden="true">↳</span> Open a route to inspect its raw JSON response.</p>
+      </aside>
+    </section>
+
+    <section class="collection" aria-labelledby="collectionTitle">
+      <div class="collectionHeading">
+        <div>
+          <p class="sectionEyebrow">LIVE DATA FROM THE API</p>
+          <h2 id="collectionTitle">Explore the archive</h2>
+          <p class="sectionDescription">Every card below is loaded from a separate API request.</p>
+        </div>
+        <p id="recordCount" class="recordCount">Loading records…</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="searchField">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search records or municipalities…" aria-label="Search API records">
+        </label>
+        <div class="categoryTabs" role="group" aria-label="Filter records by category">
+          <button type="button" class="categoryTab is-active" data-table="" aria-pressed="true">All records</button>
+          <button type="button" class="categoryTab" data-table="historical_places" aria-pressed="false">Historical places</button>
+          <button type="button" class="categoryTab" data-table="cultural_heritage" aria-pressed="false">Cultural heritage</button>
+        </div>
+      </div>
+
+      <p id="loadMessage" class="loadMessage" role="status" aria-live="polite"></p>
+      <div id="records" class="recordGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>HERITAGE API · SAMPLE CLIENT 02</span>
+    <span>Independent frontend · Shared REST API</span>
+  </footer>
+
+  <dialog id="detailDialog" aria-labelledby="detailTitle">
+    <button id="closeDetails" class="closeButton" type="button" aria-label="Close record details">×</button>
+    <div id="recordDetails"></div>
+  </dialog>
+</body>
+</html>
