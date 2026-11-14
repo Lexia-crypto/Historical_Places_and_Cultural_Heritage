@@ -1,28 +1,55 @@
 CREATE DATABASE IF NOT EXISTS historical_heritage CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE historical_heritage;
-CREATE TABLE IF NOT EXISTS categories (
- id INT AUTO_INCREMENT PRIMARY KEY,
- name VARCHAR(100) NOT NULL UNIQUE
-);
-INSERT IGNORE INTO categories(name) VALUES
-('Historical Place'),('Built Heritage'),('Cultural Tradition'),
-('Festival or Celebration'),('Traditional Craft'),('Oral History');
-CREATE TABLE IF NOT EXISTS heritage_records (
- id INT AUTO_INCREMENT PRIMARY KEY,
- title VARCHAR(200) NOT NULL,
- category_id INT NOT NULL DEFAULT 1,
- municipality VARCHAR(120) DEFAULT '',
- barangay VARCHAR(120) DEFAULT '',
- description TEXT,
- historical_significance TEXT,
- cultural_practices TEXT,
- year_period VARCHAR(120) DEFAULT '',
- source_name VARCHAR(255) DEFAULT '',
- source_url VARCHAR(500) DEFAULT '',
- verification_status ENUM('pending','verified') DEFAULT 'pending',
- image_path VARCHAR(500) DEFAULT '',
- created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
- updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES categories(id)
-);
--- Add only records researched and verified by your group.
+
+DROP TABLE IF EXISTS heritage_records;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS cultural_heritage;
+DROP TABLE IF EXISTS historical_places;
+
+CREATE TABLE historical_places (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    municipality VARCHAR(255) DEFAULT NULL,
+    description TEXT NOT NULL,
+    historical_significance TEXT DEFAULT NULL,
+    image_url VARCHAR(1000) DEFAULT NULL,
+    source_reference VARCHAR(1000) NOT NULL,
+    verification_status VARCHAR(255) NOT NULL DEFAULT 'online_source_based'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE cultural_heritage (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    municipality VARCHAR(255) DEFAULT NULL,
+    description TEXT NOT NULL,
+    community_practice TEXT DEFAULT NULL,
+    image_url VARCHAR(1000) DEFAULT NULL,
+    source_reference VARCHAR(1000) NOT NULL,
+    verification_status VARCHAR(255) NOT NULL DEFAULT 'online_source_based'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO historical_places (name, municipality, description, historical_significance, image_url, source_reference, verification_status) VALUES
+('Simbahan ng Del Carmen', 'Del Carmen', 'A historic church in Del Carmen with origins dating to the early seventeenth century. It was established by the Augustinian Recollects and played an important role in the spread of Christianity in the Caraga region. The earlier church was destroyed by a typhoon in 1949, and the present structure was built between 1951 and 1960.', 'The church is an important part of the religious and colonial history of Siargao. The National Historical Commission of the Philippines unveiled its historical marker in January 2026.', NULL, 'https://mnltoday.ph/2026/01/19/nhcp-unveils-simbahan-ng-del-carmen-historical-marker-in-siargao/', 'online_source_based'),
+('Old Spanish Church Ramparts and Limestone Ruins', 'Del Carmen', 'Remains of the old Spanish religious compound in the area historically known as Numancia. The compound once included a church and convent, and remnants of limestone ruins and ramparts are reported to remain at the site.', 'The ruins provide evidence of the early Spanish religious settlement in the northeastern Mindanao region.', NULL, 'https://surigaodelnorte.gov.ph/del-carmen/', 'online_source_based'),
+('Stone Arch Gate of the Old Church of Sapao', 'Santa Monica', 'A stone arch gate associated with the old church of Sapao, the former name of the municipality of Santa Monica. The municipal land-use plan identifies the structure as a surviving legacy of the early Spanish settlement on Siargao Island.', 'The arch represents the historical presence of Spanish religious settlements in the area during the colonial period.', NULL, 'https://lgustamonica.gov.ph/wp-content/uploads/2023/06/CLUP-VOLUME-1-1.pdf', 'online_source_based'),
+('Historic Settlement of Cabuntog', 'General Luna', 'Cabuntog was the former name of the settlement that developed into the present municipality of General Luna. Local historical accounts describe a large church bell whose sound could reportedly be heard from the Mindanao mainland.', 'The story of Cabuntog and its church bell forms part of the early settlement history and local identity of General Luna.', NULL, 'https://surigaodelnorte.gov.ph/general-luna/', 'online_source_based'),
+('Historic Settlement of Numancia', 'Del Carmen', 'Numancia was the former name of present-day Del Carmen. Historical accounts identify it as an important early Spanish-era settlement and a former religious center in the Surigao region.', 'Numancia was historically associated with the establishment of an early Catholic mission and religious administration in northeastern Mindanao.', NULL, 'https://surigaodelnorte.gov.ph/del-carmen/', 'online_source_based'),
+('Historic Settlement of Sapao', 'Santa Monica', 'Sapao was the former name of the municipality now known as Santa Monica. Historical records describe its development as a settlement and its eventual establishment as a municipality in 1953.', 'The history of Sapao documents the development of local government and settlement on the northern part of Siargao Island.', NULL, 'https://lgustamonica.gov.ph/wp-content/uploads/2023/06/CLUP-VOLUME-1-1.pdf', 'online_source_based'),
+('Historic Settlement of Dapa', 'Dapa', 'Dapa is one of the historically identified settlements of Siargao. It appears as Pueblo Dapa on an 1863 historical map of the Surigao Strait and nearby islands.', 'Its appearance on the nineteenth-century map provides evidence of Dapa as an established settlement during the Spanish colonial period.', NULL, 'https://www.surigaoislands.com/philippine-culture/history-of-surigao-siargao-island/item/253-isla-siargao-called-sidargao-in-1683', 'online_source_based'),
+('1924 Colorum Uprising Historical Site', 'Socorro', 'Socorro was the setting of a major Colorum uprising in 1924. The movement involved local followers who rose against government forces during the American colonial period.', 'The uprising is a significant event in the history of Socorro and the wider Surigao region.', NULL, 'https://surigaodelnorte.gov.ph/socorro/', 'online_source_based'),
+('Pamosaingan Colorum Uprising Historical Area', 'Socorro', 'Pamosaingan in the Bucas Grande area is associated with accounts of the 1924 Colorum movement and the confrontation between its followers and government forces.', 'The event forms part of the local history of resistance, religious movements, and colonial-era conflict in the Surigao region.', NULL, 'https://www.surigaohistoricalsociety.org/surigao-book/2025-aug-articles/2025-aug-27-colorums', 'online_source_based'),
+('Danjog Cave', 'Santa Monica', 'Danjog Cave is a cave attraction in Santa Monica. The municipality\'s land-use plan also associates the area with a local account of an underground palace belonging to a tribal king.', 'The cave is relevant to local heritage because of its association with traditional stories and the cultural landscape of Santa Monica.', NULL, 'https://lgustamonica.gov.ph/wp-content/uploads/2023/06/CLUP-VOLUME-1-1.pdf', 'online_source_based');
+
+INSERT INTO cultural_heritage (name, category, municipality, description, community_practice, image_url, source_reference, verification_status) VALUES
+('Surigaonon Language', 'Language and Communication', NULL, 'Surigaonon is a Visayan language spoken in Surigao del Norte, including communities in Siargao. It is an important part of local identity and everyday communication.', 'The language is used in everyday conversations, storytelling, family interactions, and communication within local communities.', NULL, 'https://tpb.gov.ph/wp-content/uploads/2023/10/Surigao-and-Siargao-Information.pdf', 'online_source_based'),
+('Traditional Fishing Practices', 'Traditional Livelihood', NULL, 'Fishing is an important livelihood and cultural practice among Siargao communities. Generations of residents have depended on the surrounding waters for food and income.', 'Fishing activities include the use of small outrigger boats, fishing nets, knowledge of tides, and the sharing or selling of daily catches.', NULL, 'https://www.siargao.ph/2025/10/culture-of-siargaonon-traditions-that.html', 'online_source_based'),
+('Traditional Bangka Boatbuilding and Maritime Knowledge', 'Traditional Craftsmanship', NULL, 'Small outrigger boats, locally known as bangka, are an important part of traditional maritime life in Siargao. Boat construction, maintenance, and knowledge of the sea are connected to local fishing livelihoods.', 'Boat-related knowledge includes the use and maintenance of traditional boats, understanding tides, and passing maritime skills between generations.', NULL, 'https://www.siargao.ph/2025/10/culture-of-siargaonon-traditions-that.html', 'online_source_based'),
+('Coconut Farming and Coconut-Based Livelihood', 'Agricultural Tradition', NULL, 'Coconut farming has long been an important livelihood in Siargao. Coconut and rice are among the main products identified in the provincial government\'s description of Socorro.', 'Coconut cultivation and related agricultural activities contribute to household income and the island\'s rural economy.', NULL, 'https://surigaodelnorte.gov.ph/socorro/', 'online_source_based'),
+('Traditional Mat, Basket, and Hat Making', 'Traditional Crafts', 'Socorro', 'Home industries such as mat, basket, and hat making are documented among the livelihood activities of people in Socorro.', 'Local makers produce woven household and craft items that can be sold in markets and used in everyday life.', NULL, 'https://surigaodelnorte.gov.ph/socorro/', 'online_source_based'),
+('Bakhaw Festival', 'Festival and Community Celebration', 'Del Carmen', 'The Bakhaw Festival is a community celebration associated with Del Carmen. Its name reflects the importance of mangroves, which are a major feature of the municipality\'s coastal environment.', 'The festival provides an occasion for community gatherings, local celebrations, and activities that highlight the identity of Del Carmen.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based'),
+('Kinhason Festival', 'Festival and Community Celebration', 'Dapa', 'The Kinhason Festival is a cultural celebration associated with the municipality of Dapa. Kinhason refers to shellfish, reflecting the coastal and marine character of the community.', 'The celebration highlights local identity through community festivities and cultural activities.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based'),
+('Lukay-Lukay Festival', 'Festival and Community Celebration', 'Burgos', 'The Lukay-Lukay Festival is a community festival associated with Burgos, Siargao. It is one of the local celebrations that showcases the municipality\'s identity and traditions.', 'The festival brings residents together through community celebrations and cultural presentations.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based'),
+('Bugsay-Lajag Regatta Festival', 'Maritime Festival', 'San Benito', 'Bugsay-Lajag is a festival associated with San Benito that celebrates the community\'s connection to the sea and traditional boating activities.', 'The festival is associated with boat competitions and maritime-themed community celebrations.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based'),
+('Canbuntog Surfing Festival', 'Sports and Community Festival', 'General Luna', 'The Canbuntog Surfing Festival is a community celebration associated with General Luna, a municipality widely known for its surfing culture.', 'The festival highlights surfing and the relationship between the local community, the ocean, and the island\'s tourism identity.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based');
+

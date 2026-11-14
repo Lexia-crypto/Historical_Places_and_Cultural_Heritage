@@ -1,14 +1,41 @@
 <?php
-require_once 'bootstrap.php';
-if ($_SERVER['REQUEST_METHOD']!=='POST') respond(405,['success'=>false,'message'=>'Method not allowed.']);
-$data=get_json(); $errors=validate_data($data);
-if ($errors) respond(422,['success'=>false,'message'=>'Validation failed.','errors'=>$errors]);
-$f=allowed_fields($data);
-$defaults=['category_id'=>1,'municipality'=>'','barangay'=>'','description'=>'','historical_significance'=>'','cultural_practices'=>'','year_period'=>'','source_name'=>'','source_url'=>'','verification_status'=>'pending','image_path'=>''];
-$f=array_merge($defaults,$f);
+require_once __DIR__ . '/bootstrap.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    respond(405, ['success' => false, 'message' => 'Method not allowed.']);
+}
+
+$table = resolve_table($_GET['table'] ?? null);
+$data = get_json();
+$payload = normalize_payload($table, $data);
+
+if ($table === 'historical_places' && !isset($payload['verification_status'])) {
+    $payload['verification_status'] = 'online_source_based';
+}
+if ($table === 'cultural_heritage' && !isset($payload['verification_status'])) {
+    $payload['verification_status'] = 'online_source_based';
+}
+
+$errors = validate_record($table, $payload, false);
+if ($errors) {
+    respond(422, ['success' => false, 'message' => 'Validation failed.', 'errors' => $errors]);
+}
+
 try {
- $cols=array_keys($f); $params=[]; foreach($f as $k=>$v) $params[':'.$k]=$v;
- $sql='INSERT INTO heritage_records ('.implode(',',$cols).') VALUES ('.implode(',',array_map(fn($k)=>':'.$k,$cols)).')';
- $st=db()->prepare($sql); $st->execute($params);
- respond(201,['success'=>true,'message'=>'Record created.','id'=>(int)db()->lastInsertId()]);
-} catch(PDOException $e) { respond(422,['success'=>false,'message'=>'Unable to save record. Check category and field values.']); }
+    $columns = array_keys($payload);
+    $placeholders = [];
+    $params = [];
+
+    foreach ($columns as $column) {
+        $placeholders[] = ':' . $column;
+        $params[':' . $column] = $payload[$column];
+    }
+
+    $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $columns) . ') VALUES (' . implode(', ', $placeholders) . ')';
+    $statement = db()->prepare($sql);
+    $statement->execute($params);
+
+    respond(201, ['success' => true, 'message' => 'Record created.', 'table' => $table, 'id' => (int) db()->lastInsertId()]);
+} catch (Throwable $e) {
+    respond(422, ['success' => false, 'message' => 'Unable to save record. Check required fields and data types.']);
+}
