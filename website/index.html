@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siargao Untold</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="siteNav" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="Siargao Untold home">
+        <span class="brandMark" aria-hidden="true">S</span>
+        <span class="brandName">Siargao <strong>Untold</strong></span>
+      </a>
+      <span class="navNote">A community heritage archive</span>
+      <a class="navLink" href="#collection">Explore the archive <span aria-hidden="true">↘</span></a>
+    </nav>
+    <div class="heroText">
+      <p class="eyebrow">SIARGAO ISLAND <span>·</span> SURIGAO DEL NORTE</p>
+      <h1>Stories that make<br>an island <em>unforgettable.</em></h1>
+      <p class="heroDescription">Explore the places, practices, and traditions that carry Siargao’s history into the future.</p>
+      <a class="heroCta" href="#collection">Discover the archive <span aria-hidden="true">↓</span></a>
+      <div class="heroFootnote">
+        <span class="heroRule" aria-hidden="true"></span>
+        <span>Rooted in place. Shared across generations.</span>
+      </div>
+    </div>
+    <span class="heroCaption">A living record of Siargao</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="introHeading">
+        <p class="sectionLabel"><span>01</span> ABOUT THE ARCHIVE</p>
+        <h2>Every island holds<br>a thousand stories.</h2>
+      </div>
+      <div class="introCopy">
+        <p>A community-focused collection of Siargao’s historic places and living cultural heritage. Each record connects a story to its source, helping local knowledge stay visible, valued, and ready to be passed on.</p>
+        <div class="archiveNote">
+          <span class="archiveNoteMark" aria-hidden="true">✳</span>
+          <span><strong>Made of many voices.</strong><br>Grounded in the communities of Siargao.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="collection">
+      <div class="sectionHeading">
+        <div>
+          <p class="sectionLabel"><span>02</span> EXPLORE THE COLLECTION</p>
+          <h2>Heritage, in many forms.</h2>
+          <p class="sectionDescription">From landmarks shaped by history to traditions kept alive today.</p>
+        </div>
+        <button id="addButton" class="addButton" type="button"><span aria-hidden="true">＋</span> Add a record</button>
+      </div>
+      <div class="filters">
+        <label class="searchField">
+          <span class="searchIcon" aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search places, stories, municipalities..." aria-label="Search records">
+        </label>
+        <label class="categoryField">
+          <span>SHOWING</span>
+          <select id="categoryFilter" aria-label="Filter by category">
+            <option value="">All categories</option>
+            <option value="historical_places">Historical Places</option>
+            <option value="cultural_heritage">Cultural Heritage</option>
+          </select>
+        </label>
+      </div>
+      <p id="status" role="status" aria-live="polite">Loading records...</p>
+      <div id="records" class="cards"></div>
+    </section>
+  </main>
+
+  <dialog id="recordDialog">
+    <form id="recordForm">
+      <div class="heading">
+        <h2 id="formHeading">Add a record</h2>
+        <button class="muted" id="closeFormButton" type="button" aria-label="Close">×</button>
+      </div>
+      <input id="recordId" type="hidden">
+      <label>Category
+        <select id="recordType" required>
+          <option value="historical_places">Historical Places</option>
+          <option value="cultural_heritage">Cultural Heritage</option>
+        </select>
+      </label>
+      <label id="heritageCategoryField" hidden>Heritage category
+        <input id="heritageCategory" type="text" placeholder="For example, Festival and Community Celebration">
+      </label>
+      <label>Name *
+        <input id="name" type="text" maxlength="255" required>
+      </label>
+      <label>Municipality
+        <input id="municipality" type="text" maxlength="255">
+      </label>
+      <label>Description *
+        <textarea id="description" rows="4" required></textarea>
+      </label>
+      <label><span id="detailFieldLabel">Historical significance</span>
+        <textarea id="detailField" rows="3"></textarea>
+      </label>
+      <label>Image URL (optional)
+        <input id="imageUrl" type="url" placeholder="Leave blank until an actual image is available">
+      </label>
+      <label>Source reference URL *
+        <input id="sourceReference" type="url" required>
+      </label>
+      <p class="note">Records are marked online_source_based until verified through local research.</p>
+      <div class="actions">
+        <button class="muted" id="cancelFormButton" type="button">Cancel</button>
+        <button type="submit">Save record</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="detailDialog">
+    <div id="recordDetails"></div>
+    <button class="muted" id="closeDetailsButton" type="button">Close</button>
+  </dialog>
+
+  <footer>
+    <div class="footerInner">
+      <a class="brand footerBrand" href="#" aria-label="Siargao Untold home">
+        <span class="brandMark" aria-hidden="true">S</span>
+        <span class="brandName">Siargao <strong>Untold</strong></span>
+      </a>
+      <p>A living archive of the places, people, and traditions of Siargao Island.</p>
+      <a class="backToTop" href="#" aria-label="Back to top">BACK TO TOP <span aria-hidden="true">↑</span></a>
+    </div>
+    <div class="footerBase">HISTORICAL PLACES <span>·</span> CULTURAL HERITAGE <span>·</span> SIARGAO, PHILIPPINES</div>
+  </footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>

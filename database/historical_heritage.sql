@@ -53,3 +53,46 @@ INSERT INTO cultural_heritage (name, category, municipality, description, commun
 ('Bugsay-Lajag Regatta Festival', 'Maritime Festival', 'San Benito', 'Bugsay-Lajag is a festival associated with San Benito that celebrates the community\'s connection to the sea and traditional boating activities.', 'The festival is associated with boat competitions and maritime-themed community celebrations.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based'),
 ('Canbuntog Surfing Festival', 'Sports and Community Festival', 'General Luna', 'The Canbuntog Surfing Festival is a community celebration associated with General Luna, a municipality widely known for its surfing culture.', 'The festival highlights surfing and the relationship between the local community, the ocean, and the island\'s tourism identity.', NULL, 'https://www.siargaoislands.com/travel-tips/', 'online_source_based');
 
+UPDATE historical_places
+SET image_url = CONCAT('http://localhost/History/website/assets/images/', CASE name
+    WHEN 'Simbahan ng Del Carmen' THEN 'Simbahan ng Del Carmen.jpg'
+    WHEN 'Old Spanish Church Ramparts and Limestone Ruins' THEN 'Ruins.jpg'
+    WHEN 'Stone Arch Gate of the Old Church of Sapao' THEN 'Stone.jpg'
+    WHEN 'Historic Settlement of Cabuntog' THEN 'Cabuntog.webp'
+    WHEN 'Historic Settlement of Numancia' THEN 'Del Carmen.webp'
+    WHEN 'Historic Settlement of Sapao' THEN 'Sapao.jpg'
+    WHEN 'Historic Settlement of Dapa' THEN 'Dapa.jpg'
+    WHEN '1924 Colorum Uprising Historical Site' THEN 'Socorro.jpg'
+    WHEN 'Pamosaingan Colorum Uprising Historical Area' THEN 'Pamosaingon.jpg'
+    WHEN 'Danjog Cave' THEN 'Danjug Cave.jpg'
+END)
+WHERE name IN (
+    'Simbahan ng Del Carmen', 'Old Spanish Church Ramparts and Limestone Ruins',
+    'Stone Arch Gate of the Old Church of Sapao', 'Historic Settlement of Cabuntog',
+    'Historic Settlement of Numancia', 'Historic Settlement of Sapao',
+    'Historic Settlement of Dapa', '1924 Colorum Uprising Historical Site',
+    'Pamosaingan Colorum Uprising Historical Area', 'Danjog Cave'
+);
+
+UPDATE cultural_heritage
+SET image_url = CONCAT('http://localhost/History/website/assets/images/', CASE name
+    WHEN 'Surigaonon Language' THEN 'Surigaonon.jpg'
+    WHEN 'Traditional Fishing Practices' THEN 'Fishing.jpg'
+    WHEN 'Traditional Bangka Boatbuilding and Maritime Knowledge' THEN 'Boat.jpg'
+    WHEN 'Coconut Farming and Coconut-Based Livelihood' THEN 'Coconut.jpg'
+    WHEN 'Traditional Mat, Basket, and Hat Making' THEN 'Hat.jpg'
+    WHEN 'Bakhaw Festival' THEN 'Bakhaw.jpg'
+    WHEN 'Kinhason Festival' THEN 'Kinhason.jpg'
+    WHEN 'Lukay-Lukay Festival' THEN 'Lukay.jpg'
+    WHEN 'Bugsay-Lajag Regatta Festival' THEN 'Bugsay.jpg'
+    WHEN 'Canbuntog Surfing Festival' THEN 'Surf.jpg'
+END)
+WHERE name IN (
+    'Surigaonon Language', 'Traditional Fishing Practices',
+    'Traditional Bangka Boatbuilding and Maritime Knowledge',
+    'Coconut Farming and Coconut-Based Livelihood',
+    'Traditional Mat, Basket, and Hat Making', 'Bakhaw Festival',
+    'Kinhason Festival', 'Lukay-Lukay Festival',
+    'Bugsay-Lajag Regatta Festival', 'Canbuntog Surfing Festival'
+);
+
